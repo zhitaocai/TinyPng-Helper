@@ -10,6 +10,11 @@ export class TaskConfig {
      */
     imgDirPath: string = "";
 
+    /**
+     * tiny key
+     */
+    tinyKey: string = "";
+
     constructor() {
         // console.log("当前执行文件所在目录路径", __dirname);
         // console.log("当前执行文件绝对路径", __filename);
@@ -20,10 +25,10 @@ export class TaskConfig {
 
         this._fromCmdString(process.argv[2]);
 
-        console.log("")
+        console.log("");
         console.log("初始化项目配置");
         console.log(this);
-        console.log("")
+        console.log("");
     }
 
     /**
@@ -40,6 +45,10 @@ export class TaskConfig {
             switch (paramName) {
                 case "imgDirPath": {
                     this.imgDirPath = paramValue;
+                    break;
+                }
+                case "tinyKey": {
+                    this.tinyKey = paramValue;
                     break;
                 }
             }

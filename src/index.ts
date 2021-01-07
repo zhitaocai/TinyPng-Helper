@@ -2,9 +2,9 @@ import { TinyCompressTask } from "./tasks/TinyCompressTask";
 import { TaskConfig } from "./tasks/TaskConfig";
 
 export class TinyHelper {
-    start() {
+    async start() {
         let taskConfig = new TaskConfig();
-        new TinyCompressTask().handle(taskConfig);
+        await new TinyCompressTask().handle(taskConfig);
         console.log("恭喜，处理成功！");
     }
 }

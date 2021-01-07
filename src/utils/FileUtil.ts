@@ -1,11 +1,13 @@
+import fs from "fs";
+import path from "path";
+
 /**
  * 字节工具类
  *
  * @author caizhitao
  * @created 2021-01-07 19:30:23
  */
-
-export default class ByteUtil {
+export default class FileUtil {
     /**
      * 将字节数转换为可读字符串
      *
@@ -24,5 +26,16 @@ export default class ByteUtil {
             ++u;
         } while (Math.abs(bytes) >= thresh && u < units.length - 1);
         return bytes.toFixed(1) + " " + units[u];
+    }
+
+    /**
+     * 获取文件大小
+     *
+     * @param filePath 文件绝对路径
+     *
+     * @returns 字节数
+     */
+    static getFileSize(filePath: string): number {
+        return fs.statSync(filePath).size;
     }
 }

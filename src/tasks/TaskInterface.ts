@@ -6,5 +6,5 @@ export interface TaskInterface {
      *
      * @param taskConfig 配置参数
      */
-    handle(taskConfig: TaskConfig): void;
+    handle(taskConfig: TaskConfig): Promise<void>;
 }
