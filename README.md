@@ -7,7 +7,7 @@
 ## 一、使用方法
 
 ```
-npm run build "imgDirPath=/Users/caizhitao/Desktop/testpngdir;tinyKey=xxx"
+npm run build "imgDirPath=this_project_abs_path/testimg;tinyKey=xxx"
 ```
 
 参数格式:
@@ -16,7 +16,7 @@ npm run build "imgDirPath=/Users/caizhitao/Desktop/testpngdir;tinyKey=xxx"
 
 参数说明：
 
-* ``imgDirPath``: 图片所在文件夹的路径
+* ``imgDirPath``: 图片所在文件夹的绝对路径
 * ``tinyKey``: Tiny 的 API Key，在 [Ting 官网申请](https://tinypng.com/) 即可（很简单，填邮箱即可注册获取到 API Key）
 
 ## 二、注意事项
