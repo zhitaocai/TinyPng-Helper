@@ -4,10 +4,9 @@ import FileUtil from "../utils/FileUtil";
 import { ImageModel } from "./ImageModel";
 import { ImageType } from "./ImageType";
 import { TaskConfig } from "./TaskConfig";
-import { TaskInterface } from "./TaskInterface";
 import tinify = require("tinify");
 
-export class TinyCompressTask implements TaskInterface {
+export class TinyCompressTask {
     /**
      * 当前已经压缩的图片数量
      */
