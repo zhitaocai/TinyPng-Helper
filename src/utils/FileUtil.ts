@@ -38,4 +38,29 @@ export default class FileUtil {
     static getFileSize(filePath: string): number {
         return fs.statSync(filePath).size;
     }
+
+    /**
+     * 获取指定目录及其子目录指定后缀名字的文件的路径
+     *
+     * @param dirName   目录名
+     * @param extNames  期望后缀名字的文件
+     * @param result    接受目标后缀文件路径的数组
+     */
+    static collectFilePaths(dirName: string, extNames: string[], result: string[]) {
+        if (!fs.existsSync(dirName)) {
+            throw new Error(`${dirName} 目录不存在`);
+        }
+        let files = fs.readdirSync(dirName);
+        files.forEach((fileName: fs.PathLike) => {
+            let fileAbsPath: string = path.join(dirName, fileName.toString());
+            let stat: fs.Stats = fs.statSync(fileAbsPath);
+            if (stat.isDirectory()) {
+                this.collectFilePaths(fileAbsPath, extNames, result);
+            } else {
+                if (extNames.indexOf(path.extname(fileAbsPath)) != -1) {
+                    result.push(fileAbsPath);
+                }
+            }
+        });
+    }
 }

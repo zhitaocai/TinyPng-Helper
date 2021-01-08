@@ -1,8 +1,4 @@
-import fs from "fs";
-import path from "path";
 import FileUtil from "../utils/FileUtil";
-import { ImageModel } from "./ImageModel";
-import { ImageType } from "./ImageType";
 import { TaskConfig } from "./TaskConfig";
 import tinify = require("tinify");
 
@@ -34,26 +30,26 @@ export class TinyCompressTask {
      */
     async handle(taskConfig: TaskConfig): Promise<void> {
         // 收集输出目录图片文件
-        let imgs: ImageModel[] = [];
-        this._collectImageFilePaths(taskConfig.imgDirPath, imgs);
+        let imgFilePaths: string[] = [];
+        FileUtil.collectFilePaths(taskConfig.imgDirPath, [".png", ".jpg", ".jpeg"], imgFilePaths);
 
         // 初始化数据
         this._curCompressedImageCount = 0;
-        this._totalCompressedImageCount = imgs.length;
+        this._totalCompressedImageCount = imgFilePaths.length;
         this._finalSizeInBytes = 0;
         this._srcSizeInBytes = 0;
-        imgs.forEach((img) => {
-            this._srcSizeInBytes += FileUtil.getFileSize(img.filePath);
+        imgFilePaths.forEach((imgFilePath) => {
+            this._srcSizeInBytes += FileUtil.getFileSize(imgFilePath);
         });
-        console.log(`找到 ${imgs.length} 张原始图片，总大小 ${FileUtil.toReadableFileSize(this._srcSizeInBytes)}`);
+        console.log(`找到 ${imgFilePaths.length} 张原始图片，总大小 ${FileUtil.toReadableFileSize(this._srcSizeInBytes)}`);
         console.log("");
 
         // 执行加密（替换原文件）
         tinify.key = taskConfig.tinyKey;
         try {
             await Promise.all(
-                imgs.map((img) => {
-                    return this._compressImage(img.filePath);
+                imgFilePaths.map((imgFilePath) => {
+                    return this._compressImage(imgFilePath);
                 })
             );
             let totalCompressRate = (this._srcSizeInBytes - this._finalSizeInBytes) / this._srcSizeInBytes;
@@ -62,7 +58,8 @@ export class TinyCompressTask {
         } catch (error) {
             console.error("");
             console.error("压缩出错了！");
-            throw error;
+            console.error("");
+            console.error(error);
         }
     }
 
@@ -83,47 +80,5 @@ export class TinyCompressTask {
                 compressedSize
             )} 压缩了 ${compressRate.toFixed(1)}%`
         );
-    }
-
-    /**
-     * 获取指定目录的所有图片文件路径
-     *
-     * @param dirName 目录名
-     * @param imgs 接受图片文件的数组
-     */
-    private _collectImageFilePaths(dirName: string, imgs: ImageModel[]) {
-        if (!fs.existsSync(dirName)) {
-            throw new Error(`${dirName} 目录不存在`);
-        }
-        let files = fs.readdirSync(dirName);
-        files.forEach((fileName: fs.PathLike) => {
-            let filePath = path.join(dirName, fileName.toString());
-            let stat: fs.Stats = fs.statSync(filePath);
-            if (stat.isDirectory()) {
-                this._collectImageFilePaths(filePath, imgs);
-            } else {
-                let fileExtName = path.extname(filePath);
-                switch (fileExtName) {
-                    case ".png":
-                        imgs.push({
-                            type: ImageType.PNG,
-                            filePath: filePath,
-                        });
-                        break;
-                    case ".jpg":
-                        imgs.push({
-                            type: ImageType.JPG,
-                            filePath: filePath,
-                        });
-                        break;
-                    case ".jpeg":
-                        imgs.push({
-                            type: ImageType.JPEG,
-                            filePath: filePath,
-                        });
-                        break;
-                }
-            }
-        });
     }
 }
