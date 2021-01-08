@@ -25,6 +25,10 @@ npm run build "imgDirPath=/Users/caizhitao/Desktop/testpngdir;tinyKey=xxx"
   * 花钱提升每个月的图片压缩数量
   * 等下个月，又可以重新获取 500 个额度
   * 多用几个邮箱注册多几个账号以获取多个 API Key
+* 目前仅支持以下类型图片的压缩
+  * .png
+  * .jpg
+  * .jpeg
 
 ## 三、支持一下作者吧
 
