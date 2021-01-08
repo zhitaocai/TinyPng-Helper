@@ -50,16 +50,20 @@ export class TinyCompressTask {
 
         // 执行加密（替换原文件）
         tinify.key = taskConfig.tinyKey;
-        await Promise.all(
-            imgs.map((img) => {
-                return this._compressImage(img.filePath);
-            })
-        );
-        let totalCompressRate = (this._srcSizeInBytes - this._finalSizeInBytes) / this._srcSizeInBytes;
-        console.log("");
-        console.log(
-            `压缩所有图片完成，大小变化 ${FileUtil.toReadableFileSize(this._srcSizeInBytes)} -> ${FileUtil.toReadableFileSize(this._finalSizeInBytes)} 压缩了 ${totalCompressRate.toFixed(1)}%`
-        );
+        try {
+            await Promise.all(
+                imgs.map((img) => {
+                    return this._compressImage(img.filePath);
+                })
+            );
+            let totalCompressRate = (this._srcSizeInBytes - this._finalSizeInBytes) / this._srcSizeInBytes;
+            console.log("");
+            console.log(`压缩完成，大小变化 ${FileUtil.toReadableFileSize(this._srcSizeInBytes)} -> ${FileUtil.toReadableFileSize(this._finalSizeInBytes)} 压缩了 ${totalCompressRate.toFixed(1)}%`);
+        } catch (error) {
+            console.error("");
+            console.error("压缩出错了！");
+            throw error;
+        }
     }
 
     /**
