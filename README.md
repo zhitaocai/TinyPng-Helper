@@ -2,7 +2,7 @@
 
 [![](https://img.shields.io/badge/Release-0.1.0-orange.svg)](CHANGELOG.md)
 
-一个压缩指定文件夹的所有图片大小的工具。
+一个压缩指定文件夹的所有图片的工具。
 
 ## 一、下载并初始化项目
 
