@@ -4,10 +4,10 @@
 
 一个压缩指定文件夹的所有图片大小的工具。
 
-## 使用方法
+## 一、使用方法
 
 ```
-npm run build "imgDirPath=/Users/caizhitao/Desktop/testpngdir"
+npm run build "imgDirPath=/Users/caizhitao/Desktop/testpngdir;tinyKey=xxx"
 ```
 
 参数格式:
@@ -17,12 +17,16 @@ npm run build "imgDirPath=/Users/caizhitao/Desktop/testpngdir"
 参数说明：
 
 * ``imgDirPath``: 图片所在文件夹的路径
+* ``tinyKey``: Tiny 的 API Key，在 [Ting 官网申请](https://tinypng.com/) 即可（很简单，填邮箱即可注册获取到 API Key）
 
-## 实现原理
+## 二、注意事项
 
-内部实际采用 [TinyPng 的 API](https://tinypng.com/developers/reference/nodejs) 去实现
+* 由于内部压缩采用的是 [TinyPng 的 API](https://tinypng.com/developers/reference/nodejs) 去实现，**申请回来的 Tiny Png API Key 每个月只能免费压缩 500个 图片**，如果该月已经超过这个压缩数量，将不能压缩图片。解决这个问题的一些参考方法：
+  * 花钱提升每个月的图片压缩数量
+  * 等下个月，又可以重新获取 500 个额度
+  * 多用几个邮箱注册多几个账号以获取多个 API Key
 
-## 支持一下作者吧
+## 三、支持一下作者吧
 
 如果此项目对你有帮助，不妨支持一下我吧~
 
