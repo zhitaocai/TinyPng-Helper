@@ -54,7 +54,7 @@ export class TinyCompressTask {
                     return this._compressImage(imgFilePath);
                 })
             );
-            let totalCompressRate = (this._srcSizeInBytes - this._finalSizeInBytes) / this._srcSizeInBytes;
+            let totalCompressRate = (100 * (this._srcSizeInBytes - this._finalSizeInBytes)) / this._srcSizeInBytes;
             console.log("");
             console.log(`压缩完成，大小变化 ${FileUtil.toReadableFileSize(this._srcSizeInBytes)} -> ${FileUtil.toReadableFileSize(this._finalSizeInBytes)} 压缩了 ${totalCompressRate.toFixed(1)}%`);
         } catch (error) {
@@ -76,7 +76,7 @@ export class TinyCompressTask {
         let compressedSize = FileUtil.getFileSize(filePath);
         this._finalSizeInBytes += compressedSize;
         this._curCompressedImageCount++;
-        let compressRate = (srcSize - compressedSize) / srcSize;
+        let compressRate = (100 * (srcSize - compressedSize)) / srcSize;
         console.log(
             `(${this._curCompressedImageCount}/${this._totalCompressedImageCount}) 压缩图片 ${filePath} 大小变化 ${FileUtil.toReadableFileSize(srcSize)} -> ${FileUtil.toReadableFileSize(
                 compressedSize
