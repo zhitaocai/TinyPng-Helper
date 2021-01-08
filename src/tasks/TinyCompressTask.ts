@@ -1,6 +1,7 @@
 import FileUtil from "../utils/FileUtil";
 import { TaskConfig } from "./TaskConfig";
 import tinify = require("tinify");
+import FileChunk from "../utils/FileChunk";
 
 export class TinyCompressTask {
     /**
@@ -31,7 +32,8 @@ export class TinyCompressTask {
     async handle(taskConfig: TaskConfig): Promise<void> {
         // 收集输出目录图片文件
         let imgFilePaths: string[] = [];
-        FileUtil.collectFilePaths(taskConfig.imgDirPath, [".png", ".jpg", ".jpeg"], imgFilePaths);
+        // FileUtil.collectFilePaths(taskConfig.imgDirPath, [".png", ".jpg", ".jpeg"], imgFilePaths);
+        FileUtil.collectFilePathsByChunk(taskConfig.imgDirPath, [FileChunk.PNG, FileChunk.JPEG], imgFilePaths);
 
         // 初始化数据
         this._curCompressedImageCount = 0;
