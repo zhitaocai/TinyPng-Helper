@@ -1,6 +1,6 @@
 # TinyPng Helper
 
-[![](https://img.shields.io/badge/Release-0.1.0-orange.svg)](CHANGELOG.md)
+[![](https://img.shields.io/badge/Release-0.2.0-orange.svg)](CHANGELOG.md)
 
 一个压缩指定文件夹的所有图片的工具。
 
@@ -17,7 +17,7 @@ npm i
 ## 二、使用方法
 
 ```
-npm run build "imgDirPath=this_project_abs_path/testimg;tinyKey=xxx"
+npm run build "tinyKey=xxx;imgDirPath=this_project_abs_path/testimg;minImageSize=10240"
 ```
 
 参数格式:
@@ -26,8 +26,11 @@ npm run build "imgDirPath=this_project_abs_path/testimg;tinyKey=xxx"
 
 参数说明：
 
-* ``imgDirPath``: 图片所在文件夹的绝对路径
-* ``tinyKey``: Tiny 的 API Key，在 [Ting 官网申请](https://tinypng.com/) 即可（很简单，填邮箱即可注册获取到 API Key）
+| 参数             | 必选 | 说明                                                                                           |
+| ---------------- | ---- | ---------------------------------------------------------------------------------------------- |
+| **tinyKey**      | 是   | Tiny 的 API Key，在 [Ting 官网申请](https://tinypng.com/) 即可（填邮箱即可注册获取到 API Key） |
+| **imgDirPath**   | 是   | 图片所在文件夹的绝对路径                                                                       |
+| **minImageSize** | 否   | 指定参与压缩的文件的最小大小。只有大于这个最小文件大小的图片文件才会参与压缩                   |
 
 运行示例： 
 

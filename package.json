@@ -1,7 +1,7 @@
 {
   "name": "tinypng-helper",
   "version": "0.1.0",
-  "description": "将 Cocos Creator 构建后目录的部分资源进行加密",
+  "description": "TinyPng 的简单封装，直接将指定文件夹的图片压缩",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -9,20 +9,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zhitaocai/CocosCreator-Build-Encrypt.git"
+    "url": "git+https://github.com/zhitaocai/TinyPng-Helper.git"
   },
   "keywords": [
     "Cocos",
     "CocosCreator",
-    "Build",
-    "Encrypt"
+    "TinyPng"
   ],
   "author": "zhitaocai",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zhitaocai/CocosCreator-Build-Encrypt/issues"
+    "url": "https://github.com/zhitaocai/TinyPng-Helper/issues"
   },
-  "homepage": "https://github.com/zhitaocai/CocosCreator-Build-Encrypt",
+  "homepage": "https://github.com/zhitaocai/TinyPng-Helper",
   "dependencies": {
     "@types/node": "^14.0.18",
     "read-chunk": "^3.2.0",
