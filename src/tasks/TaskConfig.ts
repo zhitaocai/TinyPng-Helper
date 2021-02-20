@@ -15,6 +15,12 @@ export class TaskConfig {
      */
     tinyKey: string = "";
 
+    /**
+     * 最小的文件大小（Bytes）
+     * 只有大于这个大小的图片文件才会进行压缩
+     */
+    minImageSize: number = -1;
+
     constructor() {
         // console.log("当前执行文件所在目录路径", __dirname);
         // console.log("当前执行文件绝对路径", __filename);
@@ -43,14 +49,15 @@ export class TaskConfig {
             let paramName = paramStruct[0];
             let paramValue = paramStruct[1];
             switch (paramName) {
-                case "imgDirPath": {
+                case "imgDirPath":
                     this.imgDirPath = paramValue;
                     break;
-                }
-                case "tinyKey": {
+                case "tinyKey":
                     this.tinyKey = paramValue;
                     break;
-                }
+                case "minImageSize":
+                    this.minImageSize = parseInt(paramValue);
+                    break;
             }
         });
     }

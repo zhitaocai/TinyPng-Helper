@@ -31,26 +31,43 @@ export class TinyCompressTask {
      */
     async handle(taskConfig: TaskConfig): Promise<void> {
         // 收集输出目录图片文件
-        let imgFilePaths: string[] = [];
+        let finalImgFilePaths: string[] = [];
+        let srcImgFilePaths: string[] = [];
         // FileUtil.collectFilePaths(taskConfig.imgDirPath, [".png", ".jpg", ".jpeg"], imgFilePaths);
-        FileUtil.collectFilePathsByChunk(taskConfig.imgDirPath, [FileChunk.PNG, FileChunk.JPEG], imgFilePaths);
+        FileUtil.collectFilePathsByChunk(taskConfig.imgDirPath, [FileChunk.PNG, FileChunk.JPEG], srcImgFilePaths);
+
+        // 过滤指定大小的图片
+        if (taskConfig.minImageSize > -1) {
+            finalImgFilePaths = srcImgFilePaths.filter((imgFilePath: string) => {
+                let fileSize = FileUtil.getFileSize(imgFilePath);
+                let result = fileSize > taskConfig.minImageSize;
+                if (!result) {
+                    console.log(`跳过图片 ${imgFilePath} ，该图片大小 ${FileUtil.toReadableFileSize(fileSize)} 小于最小阈值 ${FileUtil.toReadableFileSize(taskConfig.minImageSize)}`);
+                }
+                return result;
+            });
+            console.log(`共计跳过 ${srcImgFilePaths.length - finalImgFilePaths.length} 张图片`);
+            console.log("");
+        } else {
+            finalImgFilePaths = srcImgFilePaths;
+        }
 
         // 初始化数据
         this._curCompressedImageCount = 0;
-        this._totalCompressedImageCount = imgFilePaths.length;
+        this._totalCompressedImageCount = finalImgFilePaths.length;
         this._finalSizeInBytes = 0;
         this._srcSizeInBytes = 0;
-        imgFilePaths.forEach((imgFilePath) => {
+        finalImgFilePaths.forEach((imgFilePath) => {
             this._srcSizeInBytes += FileUtil.getFileSize(imgFilePath);
         });
-        console.log(`找到 ${imgFilePaths.length} 张原始图片，总大小 ${FileUtil.toReadableFileSize(this._srcSizeInBytes)}`);
+        console.log(`找到 ${finalImgFilePaths.length} 张待压缩图片，总大小 ${FileUtil.toReadableFileSize(this._srcSizeInBytes)}`);
         console.log("");
 
         // 执行加密（替换原文件）
         tinify.key = taskConfig.tinyKey;
         try {
             await Promise.all(
-                imgFilePaths.map((imgFilePath) => {
+                finalImgFilePaths.map((imgFilePath) => {
                     return this._compressImage(imgFilePath);
                 })
             );
